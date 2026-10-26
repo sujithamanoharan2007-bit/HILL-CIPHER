@@ -29,7 +29,67 @@ STEP-4: Multiply the two matrices to obtain the cipher text of length three.
 STEP-5: Combine all these groups to get the complete cipher text.
 
 ## PROGRAM 
+~~~
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main()
+{
+    char text[100], key[10], cipher[100];
+    int matrix[3][3], i, j, k, sum, n;
+
+    printf("Enter Plain Text: ");
+    scanf("%99s", text);
+
+    printf("Enter 9-letter Key: ");
+    scanf("%9s", key);
+
+    n = strlen(text);
+
+    for (i = 0; i < n; i++)
+        text[i] = toupper(text[i]);
+
+    for (i = 0; i < 9; i++)
+        key[i] = toupper(key[i]);
+
+    for (i = 0; i < 3; i++)
+        for (j = 0; j < 3; j++)
+            matrix[i][j] = key[i * 3 + j] - 'A';
+
+    while (n % 3 != 0)
+        text[n++] = 'X';
+
+    text[n] = '\0';
+
+    for (i = 0; i < n; i += 3)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            sum = 0;
+
+            for (k = 0; k < 3; k++)
+                sum += matrix[j][k] * (text[i + k] - 'A');
+
+            cipher[i + j] = (sum % 26) + 'A';
+        }
+    }
+
+    cipher[n] = '\0';
+
+    printf("Plain Text: %s\n", text);
+    printf("Key: %s\n", key);
+    printf("Encrypted Text: %s\n", cipher);
+    printf("Cipher Text: %s\n", cipher);
+
+    return 0;
+}
+~~~
 
 ## OUTPUT
+<img width="432" height="287" alt="image" src="https://github.com/user-attachments/assets/f54448f3-8e7e-4c2c-827d-ca672167c59b" />
+
 
 ## RESULT
+Thus, the Hill cipher encryption program was implemented successfully using C language.
+
